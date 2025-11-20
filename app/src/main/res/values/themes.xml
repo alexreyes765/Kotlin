@@ -13,4 +13,16 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.SplashScreen.Starting" parent="Theme.SplashScreen">
+        <!-- Color del background -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- icono o imagen del splash -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_toro</item>
+        <!-- Duracion del splash, solo se usa si tenemos una imagen animada AVD -->
+        <item name="windowSplashScreenAnimationDuration">0</item>
+        <!-- Aqui se indica lo que sigue despues del splash Screen, en este caso se muestra
+         el tema por defecto de la app-->
+        <item name="postSplashScreenTheme">@style/Theme.CursoKotlin</item>
+    </style>
 </resources>

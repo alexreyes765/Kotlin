@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stepSize="1"
-                android:valueFrom="60"
+                android:valueFrom="120"
                 android:valueTo="250" />
         </LinearLayout>
 

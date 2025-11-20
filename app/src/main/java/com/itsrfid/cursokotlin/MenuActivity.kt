@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.itsrfid.cursokotlin.calculadoraimc.CalculadoraImcActivity
 import com.itsrfid.cursokotlin.firstapp.FirstAppActivity
-import com.itsrfid.cursokotlin.todoapp.TodoAppActivity
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        //inicializamos la pantalla inicial
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_menu)
@@ -22,21 +24,16 @@ class MenuActivity : AppCompatActivity() {
             insets
         }
 
+        splashScreen.setKeepOnScreenCondition{false}
         //Elementos
         val btnSaludar : Button = findViewById(R.id.btn_saludapp)
         val btnImc : Button = findViewById(R.id.btnImc)
-        val btnTodoApp : Button =  findViewById(R.id.btnTodo)
 
         //Eventos de click
         btnSaludar.setOnClickListener { navigateSaludapp() }
         btnImc.setOnClickListener { navigateImc() }
-        btnTodoApp.setOnClickListener { navigateTodoApp() }
     }
 
-    private fun navigateTodoApp(){
-        val intent = Intent(this, TodoAppActivity::class.java)
-        startActivity(intent)
-    }
 
     private fun navigateImc(){
         val intent = Intent(this, CalculadoraImcActivity::class.java)

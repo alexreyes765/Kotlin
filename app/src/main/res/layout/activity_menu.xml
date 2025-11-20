@@ -21,10 +21,4 @@
         android:layout_height="wrap_content"
         android:text="IMC App" />
 
-    <Button
-        android:id="@+id/btnTodo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_todo_app" />
-
 </LinearLayout>

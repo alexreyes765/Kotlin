@@ -8,5 +8,5 @@
     <string name="age">Edad</string>
     <string name="weight">Peso</string>
     <string name="calculate">Calcular</string>
-    <string name="title_todo_app">TodoApp</string>
+    <string name="back_to_menu">Regresar</string>
 </resources>

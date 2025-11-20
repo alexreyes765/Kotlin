@@ -53,6 +53,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    //libreria para poder usar un .gif
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    //API oficial de Android para implemetar una splashScreen
+    implementation("androidx.core:core-splashscreen:1.2.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

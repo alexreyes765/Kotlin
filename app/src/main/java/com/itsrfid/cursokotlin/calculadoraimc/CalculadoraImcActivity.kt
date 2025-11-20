@@ -2,6 +2,7 @@ package com.itsrfid.cursokotlin.calculadoraimc
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -36,7 +37,7 @@ class CalculadoraImcActivity : AppCompatActivity() {
 
     private var isMaleSelected: Boolean = true
     private var isFemaleSelected: Boolean = false
-    private var weight = 94
+    private var weight = 50
     private var age = 0
     private var height = 120
     private val CHANNEL_ID = "notificacion_IMC"
@@ -84,8 +85,8 @@ class CalculadoraImcActivity : AppCompatActivity() {
 
         rsRange.addOnChangeListener { _, value, _ ->
             val df = DecimalFormat("#.##")
-            height = df.format(value).toInt()
-            txtheight.text = "$height cm"
+            height = value.toInt()
+            txtheight.text = "${df.format(value)} cm"
         }
 
         btnPlusWeight.setOnClickListener {
@@ -113,16 +114,17 @@ class CalculadoraImcActivity : AppCompatActivity() {
     }
 
     private fun calculaIMC() {
-        val imc = weight / (height.toDouble()/100 * height.toDouble()/100)
+        val imc = weight / ((height / 100.0) * (height / 100.0))
         val df = DecimalFormat("#.##")
-        val result = df.format(imc)
-        when(result.toDouble()){
-            in 0.00..18.5->{sms = "Peso por debajo de lo normal"}
-            in 18.5..24.99->{sms = "Normal"}
-            in 25.00..29.9->{sms = "Peso superior al normal"}
-            else -> { sms = "obesidad" }
+        val result = df.format(imc).replace(",", ".")
+        val imcResult = result.toDouble()
+        sms = when(imcResult){
+            in 0.00..18.5->"Peso por debajo de lo normal"
+            in 18.5..24.99->"Normal"
+            in 25.00..29.9->"Peso superior al normal"
+            else ->"obesidad"
         }
-        mostrarNotificacion("Tu IMC esta lista!", "$result $sms")
+        mostrarNotificacion("Tu IMC esta lista!", "$imcResult $sms")
     }
 
     private fun setWeight() {
@@ -175,8 +177,9 @@ class CalculadoraImcActivity : AppCompatActivity() {
         setAge()
     }
 
+
     private fun crearCanalNotificaciones() {
-        val name = "CanalInventario"
+        val name = "APP IMC"
         val descriptionText = "Notificaciones APPIMC"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
@@ -189,8 +192,17 @@ class CalculadoraImcActivity : AppCompatActivity() {
     }
 
     private fun mostrarNotificacion(titulo: String, mensaje: String) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED){
+                //si no tenemos permiso, pedirlo
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+                return
+            }
+        }
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Usa un ícono tuyo
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(titulo)
             .setContentText(mensaje)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -199,4 +211,21 @@ class CalculadoraImcActivity : AppCompatActivity() {
             notify(NOTIFICATION_ID, builder.build())
         }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 100) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permiso denegado, no se pueden mostrar notificaciones", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }

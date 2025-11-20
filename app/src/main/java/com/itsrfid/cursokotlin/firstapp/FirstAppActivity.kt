@@ -22,11 +22,24 @@ class FirstAppActivity : AppCompatActivity() {
         val etName = findViewById<EditText>(R.id.et_text)
         btnStart.setOnClickListener {
             val name = etName.text.toString()
-            val intent = Intent(this, ResultActivity::class.java)
-            intent.putExtra("Nombre_Extra", name)
-            startActivity(intent)
+            navigateToResult(name)
+
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val etName: EditText = findViewById(R.id.et_text)
+        etName.requestFocus()
+        etName.text.clear()
+    }
+
+    private fun navigateToResult(nombre: String){
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("Nombre_Extra", nombre)
+        startActivity(intent)
     }
 
 }
