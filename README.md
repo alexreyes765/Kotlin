@@ -1,5 +1,5 @@
 <h1>SABER HACER UNIDAD 3 -  Desarrollo Para Dispositivos Inteligentes</h1>
-<p>EL APK DE LA APLICACION SE ENCUENTRA EN LA SIGUIENTE RUTA:</p>
+<p>EL APK DE LA APLICACION SE ENCUENTRA EN LA SIGUIENTE RUTA: /app/release </p>
 
 <h2>Icono de aplicación</h2>
 <p>El icono de la aplicación esta creado en base al caso practico elegido, tiene el icono de persona saludando junto con cinta de medir y una báscula. A continuación, se muestra que el icono está puesto en nuestra aplicación desarrollada</p>
