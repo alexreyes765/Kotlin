@@ -1,6 +1,6 @@
 package com.itsrfid.cursokotlin
 
-import  com.itsrfid.cursokotlin.Modelo.Usuarios
+//import  com.itsrfid.cursokotlin.Modelo.Usuarios
 
 //comentarios
 /*otra forma de comentarios
